@@ -1,3 +1,5 @@
+using BloggerBits.Models.Request;
+using BloggerBits.Services.Contents;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,10 +9,21 @@ namespace BloggerBits.Controllers
     [ApiController]
     public class ContentController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult get()
+        private readonly IContenService _contenService;
+        public ContentController(IContenService contenService)
         {
-            return Ok("its working...");
+            _contenService = contenService;
         }
+
+        [HttpPost("add")]
+        public async Task<IActionResult> addContent( ContentRequest contentRequest)
+        {
+            
+            var content = await _contenService.AddAsync(contentRequest);
+            return Ok(content);
+
+        }
+
+
     }
 }
