@@ -1389,6 +1389,19 @@
             "rid": "win"
           }
         }
+      },
+      "Unidecode.NET/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Unidecode.NET.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Unidecode.NET.dll": {
+            "related": ".xml"
+          }
+        }
       }
     }
   },
@@ -4379,6 +4392,23 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "Unidecode.NET/2.1.0": {
+      "sha512": "AY7AC9+8wOgKY/RNol7BTiVk6BO46l0+O2TtwUdhRneixRzxYW278bd+AtCe13P1iU8hG1hdICa2UJyHzx95nA==",
+      "type": "package",
+      "path": "unidecode.net/2.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard1.2/Unidecode.NET.dll",
+        "lib/netstandard1.2/Unidecode.NET.xml",
+        "lib/netstandard2.0/Unidecode.NET.dll",
+        "lib/netstandard2.0/Unidecode.NET.xml",
+        "lib/netstandard2.1/Unidecode.NET.dll",
+        "lib/netstandard2.1/Unidecode.NET.xml",
+        "unidecode.net.2.1.0.nupkg.sha512",
+        "unidecode.net.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
@@ -4388,7 +4418,8 @@
       "Microsoft.EntityFrameworkCore.Design >= 9.0.4",
       "Microsoft.EntityFrameworkCore.Tools >= 9.0.4",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 9.0.4",
-      "Swashbuckle.AspNetCore >= 6.7.3"
+      "Swashbuckle.AspNetCore >= 6.7.3",
+      "Unidecode.NET >= 2.1.0"
     ]
   },
   "packageFolders": {
@@ -4468,6 +4499,10 @@
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[6.7.3, )"
+          },
+          "Unidecode.NET": {
+            "target": "Package",
+            "version": "[2.1.0, )"
           }
         },
         "imports": [

@@ -19,11 +19,12 @@
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.3" />
+    <PackageReference Include="Unidecode.NET" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DTOS\Responses\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Models\Response\" />
   </ItemGroup>
 
 </Project>

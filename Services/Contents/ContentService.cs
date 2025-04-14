@@ -19,7 +19,6 @@ public class ContentService : IContenService
     public async Task<Content> AddAsync(ContentRequest contentRequest)
     {
          var contentEntity = _mapper.Map<Content>(contentRequest);
-        
           await _contentRepository.AddAsync(contentEntity);
           await _contentRepository.SaveChangesAsync();
           return contentEntity;

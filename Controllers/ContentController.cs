@@ -15,7 +15,7 @@ namespace BloggerBits.Controllers
             _contenService = contenService;
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> addContent( ContentRequest contentRequest)
         {
             

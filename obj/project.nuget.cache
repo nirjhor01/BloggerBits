@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "8+Z1r8FRDoU=",
+  "dgSpecHash": "6N4oPNEjJIA=",
   "success": true,
   "projectFilePath": "C:\\Users\\Nirjhor\\source\\repos\\BloggerBits\\BloggerBits\\BloggerBits.csproj",
   "expectedPackageFiles": [
@@ -71,7 +71,8 @@
     "C:\\Users\\Nirjhor\\.nuget\\packages\\system.text.encodings.web\\9.0.4\\system.text.encodings.web.9.0.4.nupkg.sha512",
     "C:\\Users\\Nirjhor\\.nuget\\packages\\system.text.json\\9.0.4\\system.text.json.9.0.4.nupkg.sha512",
     "C:\\Users\\Nirjhor\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512",
-    "C:\\Users\\Nirjhor\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
+    "C:\\Users\\Nirjhor\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512",
+    "C:\\Users\\Nirjhor\\.nuget\\packages\\unidecode.net\\2.1.0\\unidecode.net.2.1.0.nupkg.sha512"
   ],
   "logs": []
 }
