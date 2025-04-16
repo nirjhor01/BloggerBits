@@ -1,7 +1,7 @@
 using System;
 using AutoMapper;
 using BloggerBits.Entities;
-using BloggerBits.Models.Request;
+using BloggerBits.DTOS.Requests;
 
 namespace BloggerBits.Mappers;
 
