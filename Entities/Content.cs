@@ -7,7 +7,10 @@ public class Content : BaseEntity
 {
     public string Title { get; set; }
     public string Description { get; set; }
+    [ForeignKey(nameof(Author))]
     public int AuthorId { get; set; }
+
+    public Author Author { get; set; }
     public bool IsPublished { get; set; }
     public DateTime? PublishedAt { get; set; }
     public bool HasPdf { get; set; }
@@ -26,7 +29,7 @@ public class Content : BaseEntity
             return transliterated.Replace(" ", "-");
         }
     }
-    public Author Author { get; set; }  // One Content can belong to one Author
+    // One Content can belong to one Author
     //many to many
     ICollection<Category> Categories { get; set; } = new List<Category>();
     public void Publish() => (IsPublished, PublishedAt) = (true, DateTime.UtcNow);

@@ -3,29 +3,27 @@ using System.Linq.Expressions;
 
 namespace BloggerBits.Repositories;
 
-public interface IBaseRepository<T> where T:class
+public interface IBaseRepository<T> where T : class
 {
-   #region Get
-        //IQueryable<T> Active();
+        #region Get
+        IQueryable<T> Active();
         Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
-        Task<IQueryable<T>> GetAllAsync();
-        public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression);
-
-        #endregion Get
+        Task<IList<T>> GetAllAsync(CancellationToken cancellationToken = default);
+        IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression);
+        #endregion
 
         #region Save
         Task<T> AddAsync(T entity, CancellationToken cancellationToken = default);
-        Task<List<T>> AddRangeAsync(List<T> entities, CancellationToken cancellationToken = default);
-
+        Task<IList<T>> AddRangeAsync(IList<T> entities, CancellationToken cancellationToken = default);
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
-        #endregion Save
+        #endregion
 
         #region Update
         Task UpdateAsync(T entity);
-        #endregion Update
+        #endregion
 
         #region Delete
         Task DeleteAsync(T entity);
         Task RemoveRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
-        #endregion Delete
+        #endregion
 }

@@ -1,17 +1,20 @@
 using System;
 using BloggerBits.Entities;
+using BloggerBits.Entities.Auth;
 using Microsoft.EntityFrameworkCore;
 
 namespace BloggerBits.Database;
 
-public class ApplicationDbContext: DbContext
+public class ApplicationDbContext : DbContext
 {
-     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+       : base(options)
     {
     }
     public DbSet<Content> Contents { get; set; }
     public DbSet<Author> Authors { get; set; }
-    
+    public DbSet<User> Users { get; set; }
+    public DbSet<Category> Categories { get; set; }
+
 
 }

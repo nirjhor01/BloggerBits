@@ -1,6 +1,5 @@
-using BloggerBits.Models.Request;
+using BloggerBits.DTOS.Requests;
 using BloggerBits.Services.Contents;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BloggerBits.Controllers

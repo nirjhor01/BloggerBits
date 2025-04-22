@@ -7,23 +7,20 @@ namespace BloggerBits.Repositories;
 
 public class BaseRepository<T> : IBaseRepository<T> where T : class
 {
-    #region CTOR
     private readonly ApplicationDbContext _context;
 
     public BaseRepository(ApplicationDbContext context)
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
-    #endregion CTOR
 
-    #region GET METHOD
+    #region Get
+    public IQueryable<T> Active()
+    {
+        return _context.Set<T>().Where(e => EF.Property<bool>(e, "isActive")).AsNoTracking();
+    }
 
-    // public virtual IQueryable<T> Active()
-    // {
-    //     return _context.Set<T>().Where(x => x == false).AsNoTracking();
-    // }
-
-    public async virtual Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         return await _context.Set<T>().FindAsync(new object[] { id }, cancellationToken);
     }
@@ -33,52 +30,51 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         return _context.Set<T>().Where(expression).AsNoTracking();
     }
 
-    public async Task<IQueryable<T>> GetAllAsync()
+    public async Task<IList<T>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        return _context.Set<T>().AsNoTracking();
+        return await _context.Set<T>().AsNoTracking().ToListAsync(cancellationToken);
     }
+    #endregion
 
-    #endregion GET METHOD
-
-    #region SAVE METHOD
+    #region Save
     public async Task<T> AddAsync(T entity, CancellationToken cancellationToken = default)
     {
         await _context.Set<T>().AddAsync(entity, cancellationToken);
         return entity;
     }
 
-    public async Task<List<T>> AddRangeAsync(List<T> entities, CancellationToken cancellationToken = default)
+    public async Task<IList<T>> AddRangeAsync(IList<T> entities, CancellationToken cancellationToken = default)
     {
         await _context.Set<T>().AddRangeAsync(entities, cancellationToken);
         return entities;
     }
+
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         await _context.SaveChangesAsync(cancellationToken);
     }
+    #endregion
 
-    #endregion SAVE METHOD
-
-    #region UPDATE METHOD
+    #region Update
     public Task UpdateAsync(T entity)
     {
         _context.Set<T>().Update(entity);
         return Task.CompletedTask;
     }
-    #endregion UPDATE METHOD
+    #endregion
 
-    #region DELETE METHOD
+    #region Delete
     public Task DeleteAsync(T entity)
     {
         _context.Set<T>().Remove(entity);
         return Task.CompletedTask;
     }
+
     public async Task RemoveRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
     {
         _context.Set<T>().RemoveRange(entities);
-        await _context.SaveChangesAsync(cancellationToken);
+        await SaveChangesAsync(cancellationToken);
     }
-
-    #endregion DELETE METHOD
+    #endregion
 
 }

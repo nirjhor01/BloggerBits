@@ -1,6 +1,4 @@
-using System;
-using BloggerBits.Entities;
-using BloggerBits.Models.Request;
+using BloggerBits.DTOS.Requests;
 
 namespace BloggerBits.Services.Contents;
 
