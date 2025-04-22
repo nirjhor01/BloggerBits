@@ -18,7 +18,7 @@ public class Content : BaseEntity
     // Navigation property to Category
 
     [NotMapped]
-    public string slug
+    public string Slug
     {
         get
         {

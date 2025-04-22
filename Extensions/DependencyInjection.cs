@@ -1,8 +1,11 @@
 using System;
 using BloggerBits.Mappers;
 using BloggerBits.Repositories;
+using BloggerBits.Repositories.Auth;
 using BloggerBits.Repositories.Contents;
+using BloggerBits.Services.Auth;
 using BloggerBits.Services.Contents;
+using BloggerBits.Services.Tokens;
 
 namespace BloggerBits.Extensions;
 
@@ -13,11 +16,19 @@ public static class DependencyInjection
         // Generic Repositories
         services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
-        // Specific Repositories
+
+
+        //Contens
+        services.AddScoped<IContenService, ContentService>();
         services.AddScoped<IContentRepository, ContentRepository>();
 
-        // Services
-        services.AddScoped<IContenService, ContentService>();
+        //Auth
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IAuthRepository, AuthRepository>();
+
+        //jwt
+
+        services.AddScoped<IJwtTokenService,JwtTokenService>();
 
         return services;
     }
