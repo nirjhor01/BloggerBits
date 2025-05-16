@@ -5,6 +5,7 @@ using BloggerBits.Repositories.Auth;
 using BloggerBits.Repositories.Contents;
 using BloggerBits.Services.Auth;
 using BloggerBits.Services.Contents;
+using BloggerBits.Services.Notifications;
 using BloggerBits.Services.Tokens;
 
 namespace BloggerBits.Extensions;
@@ -27,9 +28,13 @@ public static class DependencyInjection
         services.AddScoped<IAuthRepository, AuthRepository>();
 
         //jwt
+        services.AddScoped<IJwtTokenService, JwtTokenService>();
 
-        services.AddScoped<IJwtTokenService,JwtTokenService>();
+        //notificationClient 
+        services.AddScoped<INotificationClientGrpcService,NotificationClientGrpcService>();
 
+
+        
         return services;
     }
 

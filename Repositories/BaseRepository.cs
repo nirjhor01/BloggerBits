@@ -19,6 +19,11 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
         return _context.Set<T>().Where(e => EF.Property<bool>(e, "isActive")).AsNoTracking();
     }
+    public async Task<bool> RecordExistsAsync(Expression<Func<T, bool>> expression)
+    {
+        return await _context.Set<T>().AnyAsync(expression);
+    }
+
 
     public async Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {

@@ -3,6 +3,7 @@ using System;
 using BloggerBits.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BloggerBits.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250425132547_mig2")]
+    partial class mig2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,38 +24,6 @@ namespace BloggerBits.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("BloggerBits.Entities.Auth.ContentCategories", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ContentId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("isActive")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("ContentId");
-
-                    b.ToTable("ContentCategories");
-                });
 
             modelBuilder.Entity("BloggerBits.Entities.Auth.User", b =>
                 {
@@ -131,18 +102,6 @@ namespace BloggerBits.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Author");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "admin@bloggerbits.com",
-                            Name = "DefaultName",
-                            UpdatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Username = "admin",
-                            isActive = true
-                        });
                 });
 
             modelBuilder.Entity("BloggerBits.Entities.Category", b =>
@@ -158,8 +117,7 @@ namespace BloggerBits.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -183,6 +141,9 @@ namespace BloggerBits.Migrations
                     b.Property<int>("AuthorId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -190,10 +151,10 @@ namespace BloggerBits.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("HasPdf")
+                    b.Property<bool?>("HasPdf")
                         .HasColumnType("boolean");
 
-                    b.Property<bool>("IsPublished")
+                    b.Property<bool?>("IsPublished")
                         .HasColumnType("boolean");
 
                     b.Property<DateTime?>("PublishedAt")
@@ -201,8 +162,7 @@ namespace BloggerBits.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -214,48 +174,29 @@ namespace BloggerBits.Migrations
 
                     b.HasIndex("AuthorId");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Content");
-                });
-
-            modelBuilder.Entity("BloggerBits.Entities.Auth.ContentCategories", b =>
-                {
-                    b.HasOne("BloggerBits.Entities.Category", null)
-                        .WithMany("ContentCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Content", null)
-                        .WithMany("ContentCategories")
-                        .HasForeignKey("ContentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Content", b =>
                 {
                     b.HasOne("BloggerBits.Entities.Author", "Author")
-                        .WithMany("Contents")
+                        .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Author");
-                });
+                    b.HasOne("BloggerBits.Entities.Category", null)
+                        .WithMany("Contents")
+                        .HasForeignKey("CategoryId");
 
-            modelBuilder.Entity("BloggerBits.Entities.Author", b =>
-                {
-                    b.Navigation("Contents");
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("BloggerBits.Entities.Category", b =>
                 {
-                    b.Navigation("ContentCategories");
-                });
-
-            modelBuilder.Entity("Content", b =>
-                {
-                    b.Navigation("ContentCategories");
+                    b.Navigation("Contents");
                 });
 #pragma warning restore 612, 618
         }

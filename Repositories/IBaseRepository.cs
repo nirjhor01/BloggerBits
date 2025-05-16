@@ -7,6 +7,7 @@ public interface IBaseRepository<T> where T : class
 {
         #region Get
         IQueryable<T> Active();
+        Task<bool> RecordExistsAsync(Expression<Func<T, bool>> expression);
         Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
         Task<IList<T>> GetAllAsync(CancellationToken cancellationToken = default);
         IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression);

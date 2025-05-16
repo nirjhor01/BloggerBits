@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BloggerBits.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250418162459_mig1")]
-    partial class mig1
+    [Migration("20250426104105_mig6up")]
+    partial class mig6up
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,6 +102,18 @@ namespace BloggerBits.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Author");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Email = "admin@bloggerbits.com",
+                            Name = "DefaultName",
+                            UpdatedAt = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Username = "admin",
+                            isActive = true
+                        });
                 });
 
             modelBuilder.Entity("BloggerBits.Entities.Category", b =>
@@ -130,6 +142,21 @@ namespace BloggerBits.Migrations
                     b.ToTable("Category");
                 });
 
+            modelBuilder.Entity("CategoryContent", b =>
+                {
+                    b.Property<int>("CategoriesId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ContentsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("CategoriesId", "ContentsId");
+
+                    b.HasIndex("ContentsId");
+
+                    b.ToTable("ContentCategories", (string)null);
+                });
+
             modelBuilder.Entity("Content", b =>
                 {
                     b.Property<int>("Id")
@@ -139,9 +166,6 @@ namespace BloggerBits.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AuthorId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("CategoryId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
@@ -174,27 +198,36 @@ namespace BloggerBits.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Content");
+                });
+
+            modelBuilder.Entity("CategoryContent", b =>
+                {
+                    b.HasOne("BloggerBits.Entities.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Content", null)
+                        .WithMany()
+                        .HasForeignKey("ContentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Content", b =>
                 {
                     b.HasOne("BloggerBits.Entities.Author", "Author")
-                        .WithMany()
+                        .WithMany("Contents")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BloggerBits.Entities.Category", null)
-                        .WithMany("Contents")
-                        .HasForeignKey("CategoryId");
-
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("BloggerBits.Entities.Category", b =>
+            modelBuilder.Entity("BloggerBits.Entities.Author", b =>
                 {
                     b.Navigation("Contents");
                 });

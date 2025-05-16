@@ -1,14 +1,20 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.RegularExpressions;
 using BloggerBits.Entities;
+using BloggerBits.Entities.Auth;
 using Unidecode.NET;
 [Table("Content")]
 public class Content : BaseEntity
 {
-    public string Title { get; set; }
-    public string Description { get; set; }
+    [Required]
+    [MaxLength(64)]
+    public required string Title { get; set; }
+    public required string Description { get; set; }
+    
     [ForeignKey(nameof(Author))]
-    public int AuthorId { get; set; }
+    [Required]
+    public required int AuthorId { get; set; }
 
     public Author Author { get; set; }
     public bool IsPublished { get; set; }
@@ -30,11 +36,11 @@ public class Content : BaseEntity
         }
     }
     // One Content can belong to one Author
-    //many to many
-    ICollection<Category> Categories { get; set; } = new List<Category>();
     public void Publish() => (IsPublished, PublishedAt) = (true, DateTime.UtcNow);
     public void Unpublish() => (IsPublished, PublishedAt) = (false, null);
     public void Update() => UpdatedAt = DateTime.UtcNow;
     public void MarkAsHavingPdf() => HasPdf = true;
     public void RemovePdf() => HasPdf = false;
+    //many to many
+    public virtual ICollection<ContentCategories> ContentCategories { get; set; }
 }

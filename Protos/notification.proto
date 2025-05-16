@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "BloggerBits.Grpc";
+
+package notification;
+
+service NotificationService {
+  rpc CreatePushNotification(NotificationRequest) returns (NotificationResponse);
+}
+
+message NotificationRequest {
+  string title = 1;
+  string message = 2;
+  string userId = 3;
+}
+
+message NotificationResponse {
+  string notificationId = 1;
+  string status = 2;
+}
+

@@ -24,9 +24,9 @@ namespace BloggerBits.Controllers
             var res = await  _authService.Login(loginRequest);
             if(res != null)
             {
-                return Ok(ApiResponse<LoginResponse>.Ok(Helper.UiMessage.DataFound,res));
+                return Ok(ApiResponse<object>.Ok(UiMessage.LOGIN_SUCCESS));
             }
-            return BadRequest(ApiResponse<LoginResponse>.Fail(Helper.UiMessage.DataNotFound));
+            return BadRequest(ApiResponse<object>.Fail(UiMessage.LOGIN_FAILED));
             
         }
         [HttpPost("register")]
@@ -34,9 +34,9 @@ namespace BloggerBits.Controllers
         {
             if(await _authService.Register(registrationRequest))
             {
-                return  Ok(ApiResponse<bool>.Ok(UiMessage.DataSaved));
+                return  Ok(ApiResponse<object>.Ok(UiMessage.DATA_SAVED));
             }
-            return BadRequest(ApiResponse<bool>.Fail(UiMessage.OperationFailed));
+            return Ok(ApiResponse<object>.Fail(UiMessage.DATA_SAVED_FAILED));
         }
     }
 }

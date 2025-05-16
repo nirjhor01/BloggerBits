@@ -4,15 +4,22 @@ namespace BloggerBits.Helper;
 
 public static class UiMessage
 {
-    public const string DataFound = "Data found successfully.";
-    public const string DataSaved = "Data saved successfully.";
-    public const string DataUpdated = "Data updated successfully.";
-    public const string DataDeleted = "Data deleted successfully.";
-    public const string DataNotFound = "Data not found.";
-    public const string InvalidRequest = "Invalid request.";
-    public const string OperationFailed = "Operation failed.";
-    public const string OperationSuccessful = "Operation completed successfully.";
-    public const string UnauthorizedAccess = "Unauthorized access.";
-    public const string Forbidden = "Access forbidden.";
+    public static string DATA_FOUND = "Data found successfully.";
+    public static string DATA_SAVED = "Data saved successfully.";
+    public static string DATA_SAVED_FAILED ="Unable to save data.";
+    public static string LOGIN_FAILED = "Invalid credentials. Please try again.";
+
+    public static string LOGIN_SUCCESS = "Login successful.";
+
+    public static string DATA_UPDATED = "Data updated successfully.";
+    public static string DATA_DELETED = "Data deleted successfully.";
+    public static string DATA_NOT_FOUND = "Data not found.";
+    public static string INVALID_REQUEST = "Invalid request.";
+    public static string OPERATION_FAILED = "Operation failed.";
+    public static string OPERATION_SUCCESSFUL = "Operation completed successfully.";
+    public static string UNAUTHORIZED_ACCESS = "Unauthorized access.";
+    public static string FORBIDDEN = "Access forbidden.";
+    public static string RECORD_EXISTS = "Record exists.";
+    public static string NAME_MUST_BE_UNIQUE = "Name must be unique.";
 
 }

@@ -1,12 +1,17 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using BloggerBits.Entities.Auth;
 
 namespace BloggerBits.Entities;
 [Table("Category")]
 public class Category : BaseEntity
 {
-    public string Name { get; set; }
+
+    [Required]
+    [MaxLength(64)]
+    public required string Name { get; set; }
     // 🔁 Many-to-many navigation property
-    public ICollection<Content> Contents { get; set; } = new List<Content>();
+    public virtual ICollection<ContentCategories> ContentCategories { get; set; }
 
 }
