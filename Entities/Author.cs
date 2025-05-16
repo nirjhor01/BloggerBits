@@ -23,6 +23,6 @@ public class Author : BaseEntity
             return name;
         }
     }
-    ICollection<Content> Contents { get; set; } = new List<Content>();
+    public ICollection<Content> Contents { get; set; } = new List<Content>();
 
 }
