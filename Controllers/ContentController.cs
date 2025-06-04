@@ -29,14 +29,29 @@ namespace BloggerBits.Controllers
 
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult>GetContentByIdAsync([FromRoute] int id)
+        public async Task<IActionResult> GetContentByIdAsync([FromRoute] int id)
         {
             var res = await _contenService.GetContentByIdAsync(id);
-            if(res != null)
+            if (res != null)
             {
                 return Ok(ApiResponse<ContentResponse>.Ok(UiMessage.DATA_FOUND, res));
             }
             return Ok(ApiResponse<object>.Fail(UiMessage.DATA_NOT_FOUND));
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteContentAsync(int id, bool status)
+        {
+            var resp = await _contenService.DeleteContentAsync(id, status);
+            if (resp is not null)
+            {
+                return Ok(ApiResponse<object>.Ok(UiMessage.DATA_DELETED, resp));
+            }
+            return Ok(ApiResponse<object>.Fail(UiMessage.DATA_NOT_FOUND));
+        }
+        [HttpPut]
+        public async Task<IActionResult> UpdateContentAsync(int id, ContentRequest request)
+        {
+            var resp = await _contenService.UpdateContentAsync(id, request);
         }
 
         
