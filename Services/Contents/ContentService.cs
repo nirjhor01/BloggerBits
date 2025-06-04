@@ -51,54 +51,77 @@ public class ContentService : IContenService
         try
         {
             var res = await _contentRepository.GetByIdAsync(contentId);
-            if(res == null)
+            if (res == null)
             {
                 throw new RecordAlreadyExistsException(UiMessage.DATA_NOT_FOUND);
             }
-            StringBuilder fixedStr = new();
-
             var contentEntity = _mapper.Map<Content>(res);
-            //var cleaned = contentEntity.Description.Replace("\\\"", "\"");
-            //contentEntity.Description = cleaned;
-            //var json = JsonSerializer.Serialize(contentEntity.Description);
-            //var original = JsonSerializer.Deserialize<string>(json);
-            //string sanitizedData = original.Replace("\\", "");
-            Console.WriteLine(contentEntity.Description);
-
-
-
-            
-            
-
-
-
             return _mapper.Map<ContentResponse>(contentEntity);
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             throw new OperationFailedException(UiMessage.OPERATION_FAILED, ex);
         }
-        
+
     }
-    public Task<List<ContentResponse>> GetAllContentAsync(ContentRequest contentRequest)
+    public async Task<List<ContentResponse>> GetAllContentAsync()
     {
-        return null;
+        try
+        {
+            var contentReferrence = await _contentRepository.GetAllAsync();
+            if (contentReferrence is null)
+            {
+                Exception exception = new OperationFailedException("failed to retrive data");
+                throw exception;
+            }
+
+            return _mapper.Map<List<ContentResponse>>(contentReferrence);
+        }
+        catch (Exception ex)
+        {
+            Exception exception = new OperationFailedException("Failed to retrive data");
+            throw exception;
+        }
 
     }
 
-    public async Task<ContentResponse> UpdateContentAsync(ContentRequest contentRequest)
+    public async Task<ContentResponse> UpdateContentAsync(int contentId, ContentRequest contentRequest)
     {
-        return null;
-    }
+        try
+        {
+            var existed = await _contentRepository.RecordExistsAsync(item => item.Title == contentRequest.Title && item.Id != contentId);
+            if (existed is true)
+            {
+                Exception exception = new RecordAlreadyExistsException(UiMessage.NAME_MUST_BE_UNIQUE);
+                throw exception;
+            }
+            var contentReferrence = await _contentRepository.GetByIdAsync(contentId);
+            var contentEntity = _mapper.Map<Content>(contentReferrence);
+            await _contentRepository.UpdateAsync(contentEntity);
+            return _mapper.Map<ContentResponse>(contentEntity);
 
-    public Task<ContentResponse> DeleteContentAsync(ContentRequest contentRequest)
+        }
+        catch (Exception ex)
+        {
+            Exception exception = new OperationFailedException("failed to update content", ex);
+            throw exception;
+        }
+    }
+    public async Task<ContentResponse> DeleteContentAsync(int id, bool status)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var resp = await _contentRepository.GetByIdAsync(id);
+            await _contentRepository.UpdateAsync(resp);
+            var contentReferrence = _mapper.Map<Content>(resp);
+            resp.isActive = status;
+            return _mapper.Map<ContentResponse>(contentReferrence);
+        }
+        catch (Exception ex)
+        {
+            Exception exception = new OperationFailedException(UiMessage.CONTENT_DELETION_FAILED, ex);
+            throw exception;
+        }
     }
-
-
-
-
-
 }
