@@ -52,6 +52,11 @@ namespace BloggerBits.Controllers
         public async Task<IActionResult> UpdateContentAsync(int id, ContentRequest request)
         {
             var resp = await _contenService.UpdateContentAsync(id, request);
+            if (resp is not null)
+            {
+                return Ok(ApiResponse<object>.Ok(UiMessage.DATA_FOUND));
+            }
+            return Ok(ApiResponse<object>.Fail(UiMessage.DATA_NOT_FOUND));
         }
 
         
