@@ -31,9 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
-  <Protobuf Include="Protos\notification.proto" GrpcServices="Server" />
-  <Protobuf Include="Protos\notification.proto" GrpcServices="Client" />
-</ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
 
 
 </Project>
