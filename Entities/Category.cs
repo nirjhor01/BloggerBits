@@ -12,6 +12,6 @@ public class Category : BaseEntity
     [MaxLength(64)]
     public required string Name { get; set; }
     // 🔁 Many-to-many navigation property
-    public virtual ICollection<ContentCategories> ContentCategories { get; set; }
+    public virtual ICollection<ContentCategories>? ContentCategories { get; set; }
 
 }
