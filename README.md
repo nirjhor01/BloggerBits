@@ -1,1 +1,2 @@
 # BloggerBits
+This repository contains the backend for a blogging platform where multiple authors can create and publish posts, and users can read them. Each post includes content, author information, categories, and tags for easy organization and navigation. The system allows authors to manage their posts while providing users a simple way to explore content by category or tag. Additional features will be added later to enhance functionality and user experience.
