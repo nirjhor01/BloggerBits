@@ -1,9 +1,9 @@
-using System;
-using BloggerBits.Mappers;
 using BloggerBits.Repositories;
 using BloggerBits.Repositories.Auth;
+using BloggerBits.Repositories.Categories;
 using BloggerBits.Repositories.Contents;
 using BloggerBits.Services.Auth;
+using BloggerBits.Services.Categories;
 using BloggerBits.Services.Contents;
 using BloggerBits.Services.Tokens;
 
@@ -16,7 +16,9 @@ public static class DependencyInjection
         // Generic Repositories
         services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
-
+        //Category
+        services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<ICategoryRepository,CategoryRepository>();
 
         //Contens
         services.AddScoped<IContenService, ContentService>();
@@ -25,10 +27,9 @@ public static class DependencyInjection
         //Auth
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IAuthRepository, AuthRepository>();
-
         //jwt
         services.AddScoped<IJwtTokenService, JwtTokenService>();
-        
+
         return services;
     }
 
